@@ -4,6 +4,50 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+//#########################################################
+//########## START OF CARD EFFECT FUNCTIONS ###############
+//#########################################################
+void adventurerEffect(int drawntreasure, struct gameState *state, int currentPlayer, int *temphand, int tempCounter)
+{
+  while (drawntreasure < 2)
+  {
+    if (state->deckCount[currentPlayer] < 1)
+    { //if the deck is empty we need to shuffle discard and add to deck
+      shuffle(currentPlayer, state);
+    }
+    drawCard(currentPlayer, state);
+    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
+    if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+      drawntreasure++;
+    else
+    {
+      temphand[tempCounter] = cardDrawn;
+      state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+      tempCounter++;
+    }
+  }
+  while (tempCounter - 1 >= 0)
+  {
+    state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[tempCounter - 1]; // discard all cards in play that have been drawn
+    tempCounter = tempCounter - 1;
+  }
+}
+
+void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
+{
+  //+3 Cards
+  int i = 0;
+  for (i = 0; i < 3; i++)
+  {
+    drawCard(currentPlayer, state);
+  }
+
+  //discard card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+}
+//#########################################################
+//############# END OF CARD EFFECT FUNCTIONS ##############
+//#########################################################
 
 int compare(const void *a, const void *b)
 {
@@ -1431,42 +1475,5 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 //
-void adventurerEffect(int drawntreasure, struct gameState *state, int currentPlayer, int *temphand, int tempCounter)
-{
-  while (drawntreasure < 2)
-  {
-    if (state->deckCount[currentPlayer] < 1)
-    { //if the deck is empty we need to shuffle discard and add to deck
-      shuffle(currentPlayer, state);
-    }
-    drawCard(currentPlayer, state);
-    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
-    if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-      drawntreasure++;
-    else
-    {
-      temphand[tempCounter] = cardDrawn;
-      state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-      tempCounter++;
-    }
-  }
-  while (tempCounter - 1 >= 0)
-  {
-    state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[tempCounter - 1]; // discard all cards in play that have been drawn
-    tempCounter = tempCounter - 1;
-  }
-}
 
-void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
-{
-  //+3 Cards
-  int i = 0;
-  for (i = 0; i < 3; i++)
-  {
-    drawCard(currentPlayer, state);
-  }
-
-  //discard card from hand
-  discardCard(handPos, currentPlayer, state, 0);
-}
 //end of dominion.c
