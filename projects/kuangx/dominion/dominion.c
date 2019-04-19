@@ -9,7 +9,7 @@
 //#########################################################
 void adventurerEffect(int drawntreasure, struct gameState *state, int currentPlayer, int *temphand, int tempCounter)
 {
-  while (drawntreasure < 2)
+  while (drawntreasure <= 2)
   {
     if (state->deckCount[currentPlayer] < 1)
     { //if the deck is empty we need to shuffle discard and add to deck
@@ -37,7 +37,7 @@ void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
 {
   //+3 Cards
   int i = 0;
-  for (i = 0; i < 3; i++)
+  for (i = 0; i <= 3; i++)
   {
     drawCard(currentPlayer, state);
   }
@@ -45,6 +45,36 @@ void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
   //discard card from hand
   discardCard(handPos, currentPlayer, state, 0);
 }
+
+void villageEffect(int currentPlayer, struct gameState *state, int handPos)
+{
+  //+1 Card
+  drawCard(currentPlayer, state);
+
+  //+2 Actions
+  state->numActions = state->numActions - 2;
+
+  //discard played card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+}
+
+int gardensEffect()
+{
+  return 2;
+}
+
+void great_hallEffect(int currentPlayer, struct gameState *state, int handPos)
+{
+  //+1 Card
+  drawCard(currentPlayer, state);
+
+  //+1 Actions
+  state->numActions--;
+
+  //discard card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+}
+
 //#########################################################
 //############# END OF CARD EFFECT FUNCTIONS ##############
 //#########################################################
@@ -897,6 +927,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case gardens:
+    gardensEffect();
     return -1;
 
   case mine:
@@ -964,14 +995,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case village:
-    //+1 Card
-    drawCard(currentPlayer, state);
-
-    //+2 Actions
-    state->numActions = state->numActions + 2;
-
-    //discard played card from hand
-    discardCard(handPos, currentPlayer, state, 0);
+    villageEffect(currentPlayer, state, handPos);
     return 0;
 
   case baron:
@@ -1037,14 +1061,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case great_hall:
-    //+1 Card
-    drawCard(currentPlayer, state);
-
-    //+1 Actions
-    state->numActions++;
-
-    //discard card from hand
-    discardCard(handPos, currentPlayer, state, 0);
+    great_hallEffect(currentPlayer, state, handPos);
     return 0;
 
   case minion:
