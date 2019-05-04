@@ -7,34 +7,34 @@
 //#########################################################
 //########## START OF CARD EFFECT FUNCTIONS ###############
 //#########################################################
-void adventurerEffect(int drawntreasure, struct gameState *state, int currentPlayer, int *temphand, int tempCounter)
+void adventurerEffect(int* drawntreasure, int* cardDrawn, struct gameState* state, int currentPlayer, int* temphand, int* z)
 {
-  while (drawntreasure <= 2)
-  {
-    if (state->deckCount[currentPlayer] < 1)
-    { //if the deck is empty we need to shuffle discard and add to deck
+  // BUG INTRODUCED:
+  //    changed while(drawntreasure < 2 ) to (drawntreasure <= 2)
+  while(*drawntreasure < 2){
+    if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
       shuffle(currentPlayer, state);
     }
     drawCard(currentPlayer, state);
-    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
-    if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-      drawntreasure++;
-    else
-    {
-      temphand[tempCounter] = cardDrawn;
+    *cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+    if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold)
+    *drawntreasure = *drawntreasure + 1;
+    else{
+      temphand[*z]= *cardDrawn;
       state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-      tempCounter++;
+      *z = *z + 1;
     }
   }
-  while (tempCounter - 1 >= 0)
-  {
-    state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[tempCounter - 1]; // discard all cards in play that have been drawn
-    tempCounter = tempCounter - 1;
+  while(*z-1>=0){
+    state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[*z-1]; // discard all cards in play that have been drawn
+    *z = *z-1;
   }
 }
 
 void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
 {
+  // BUG INTRODUCED:
+  //    changed for(i = 0; i < 3; i++) to (i = 0; i <= 3; i++), will draw 4 cards
   //+3 Cards
   int i = 0;
   for (i = 0; i <= 3; i++)
@@ -48,6 +48,8 @@ void smithyEffect(int currentPlayer, struct gameState *state, int handPos)
 
 void villageEffect(int currentPlayer, struct gameState *state, int handPos)
 {
+  // BUG INTRODUCED
+  //    changed numActions +2 to -2
   //+1 Card
   drawCard(currentPlayer, state);
 
@@ -60,11 +62,15 @@ void villageEffect(int currentPlayer, struct gameState *state, int handPos)
 
 int gardensEffect()
 {
+  // BUG INTRODUCED
+  // refactored this into a function that returns 2
   return 2;
 }
 
 void great_hallEffect(int currentPlayer, struct gameState *state, int handPos)
 {
+  // BUG INTRODUCED
+  // changed from +1 action to -1 action
   //+1 Card
   drawCard(currentPlayer, state);
 
@@ -74,7 +80,6 @@ void great_hallEffect(int currentPlayer, struct gameState *state, int handPos)
   //discard card from hand
   discardCard(handPos, currentPlayer, state, 0);
 }
-
 //#########################################################
 //############# END OF CARD EFFECT FUNCTIONS ##############
 //#########################################################
@@ -94,8 +99,7 @@ struct gameState *newGame()
   return g;
 }
 
-int *kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
-                  int k8, int k9, int k10)
+int *kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7, int k8, int k9, int k10)
 {
   int *k = malloc(10 * sizeof(int));
   k[0] = k1;
@@ -822,9 +826,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int index;
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
-
+  int cardDrawn;
   int tributeRevealedCards[2] = {-1, -1};
-  int temphand[MAX_HAND]; // moved above the if statement
+  int temphand[MAX_HAND] = {0}; // moved above the if statement
   int drawntreasure = 0;
   //cardDrawn was only used in adventurer effect, so moving into it's own function
   int z = 0; // this is the counter for the temp
@@ -837,7 +841,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch (card)
   {
   case adventurer:
-    adventurerEffect(drawntreasure, state, currentPlayer, temphand, z);
+    adventurerEffect(&drawntreasure, &cardDrawn, (state), currentPlayer, temphand, &z);
     return 0;
 
   case council_room:
