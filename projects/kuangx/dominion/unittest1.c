@@ -1,4 +1,9 @@
-
+/*
+Author: Xiao Kuang
+Date: 5/4/2019
+Last Updated: 5/4/2019
+Description: HW3 unittest1.c, testing refactored code from HW2. This file tests the refactored code of adventurer card.  The player's hand and deck are set before each test case and is compared to the known correct result.  
+*/
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include <string.h>
@@ -11,6 +16,7 @@
 #define TESTCARD "adventurer"
 
 int main(){
+	int testCounter = 0;
 	int seed = 1000;
 	int numPlayers = 2;
 	int thisPlayer = 0;
@@ -41,13 +47,10 @@ int main(){
 		G.hand[thisPlayer][idx] = 1;
 	}
 
-	// printf("the number of cards in hand is: %d", testG.handCount[thisPlayer]);
-	// printHand(thisPlayer, &testG);
-	// cardEffect(adventurer, choice1, choice2, choice3, &testG, handpos, &bonus);
-
-	// printf("after adventurer played the number of cards in hand is: %d", testG.handCount[thisPlayer]);
-	// printHand(thisPlayer, &testG);
-
+// TESTING STARTS HERE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	printf(">>>>>UNIT TEST 1 START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	printf("Testing adventurer refactored code:\n\n");
 	// TEST CASE 1
 	// deck = {$,X,X,X,X,X,X,X,$,$}
 	// After adventurer played, +2 Treasures in hand, +0 cards in discard
@@ -60,8 +63,13 @@ int main(){
 	printf("Test case 1: Top 2 cards of deck and bottom card are treasures.\n");
 	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", testG.handCount[thisPlayer]);
 	printf("\tExpected discard count: 0\n\tActual discard count: %d\n", testG.discardCount[thisPlayer]);
-	assert(testG.handCount[thisPlayer] == 7);
-	assert(testG.discardCount[thisPlayer] == 0);
+	// print if tests passed or not. If passed, increment testCounter
+	if(testG.handCount[thisPlayer] == 7 && testG.discardCount[thisPlayer] == 0){
+		testCounter++;
+		printf("\tTEST PASSED\n");
+	}else{
+		printf("\tTEST FAILED\n");
+	}
 
 	// TEST CASE 2
 	// deck = {$,$,X,X,X,X,X,X,X,$}
@@ -74,8 +82,14 @@ int main(){
 	printf("Test case 2: Top card of deck and bottom two cards are treasures.\n");
 	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", testG.handCount[thisPlayer]);
 	printf("\tExpected discard count: 7\n\tActual discard count: %d\n", testG.discardCount[thisPlayer]);
-	assert(testG.handCount[thisPlayer] == 7);
-	assert(testG.discardCount[thisPlayer] == 7);
+	if(testG.handCount[thisPlayer] == 7 && testG.discardCount[thisPlayer] == 7){
+		testCounter++;
+		printf("\tTEST PASSED\n");
+	}else{
+		printf("\tTEST FAILED\n");
+	}
+	// assert(testG.handCount[thisPlayer] == 7);
+	// assert(testG.discardCount[thisPlayer] == 7);
 
 	// TEST CASE 3
 	// deck = {$,$,$,X,X,X,X,X,X,X}
@@ -88,8 +102,14 @@ int main(){
 	printf("Test case 3: Bottom 3 cards of deck are treasures.\n");
 	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", testG.handCount[thisPlayer]);
 	printf("\tExpected discard count: 7\n\tActual discard count: %d\n", testG.discardCount[thisPlayer]);
-	assert(testG.handCount[thisPlayer] == 7);
-	assert(testG.discardCount[thisPlayer] == 7);
+	if(testG.handCount[thisPlayer] == 7 && testG.discardCount[thisPlayer] == 7){
+		testCounter++;
+		printf("\tTEST PASSED\n");
+	}else{
+		printf("\tTEST FAILED\n");
+	}
+	// assert(testG.handCount[thisPlayer] == 7);
+	// assert(testG.discardCount[thisPlayer] == 7);
 
 	// TEST CASE 4
 	// deck = {X,X,$,$,X,X,$,X,X,X}
@@ -102,10 +122,24 @@ int main(){
 	printf("Test case 4: From the top, the 4th, 7th and 8th cards are treasures.\n");
 	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", testG.handCount[thisPlayer]);
 	printf("\tExpected discard count: 5\n\tActual discard count: %d\n", testG.discardCount[thisPlayer]);
-	assert(testG.handCount[thisPlayer] == 7);
-	assert(testG.discardCount[thisPlayer] == 5);
+	if(testG.handCount[thisPlayer] == 7 && testG.discardCount[thisPlayer] == 5){
+		testCounter++;
+		printf("\tTEST PASSED\n");
+	}else{
+		printf("\tTEST FAILED\n");
+	}
+	// assert(testG.handCount[thisPlayer] == 7);
+	// assert(testG.discardCount[thisPlayer] == 5);
 
-	// All tests have passed if reached this point
-	printf("######################\nAll tests have passed!\n######################\n");
+
+	// determine if all tests passed
+	printf("********************\n");
+	if(testCounter == 4){
+		printf("ALL TESTS PASSED\n");
+	}else{
+		printf("TEST(S) FAILED\n");
+	}
+	printf("********************\n");
+	printf(">>>>>UNIT TEST 1 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
 	return 0;
 }
