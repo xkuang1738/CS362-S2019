@@ -18,7 +18,7 @@ Description: HW3 unittest3.c, testing refactored code from HW2. This file tests 
 int main(){
 
 	// Preconditions: 5 cards in hand, including village, currentPlayer has 1 action
-	// Postconditions: 5 cards in hand, without village, currentPlayer has 3 actions.  This test does not call playCard() which would decrement actions once card is played - reason why 3 actions instead of 2. 
+	// Postconditions: 5 cards in hand, without village, currentPlayer has 3 actions.  This test does not call playCard() which would decrement actions once card is played - reason why 3 actions instead of 2. Village gets discarded after it is played, so after drawing a card, have 5 cards in hand. 
 
 	// Set up game for test
 	int testCounter = 0;
@@ -32,7 +32,6 @@ int main(){
 
 	// clear gameState(s)
 	memset(&G, 23, sizeof(struct gameState));
-	// memset(&testG, 23, sizeof(struct gameState));
 
 	// initialize the game
 	initializeGame(numPlayers, k, seed, &G);
