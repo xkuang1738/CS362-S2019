@@ -1334,6 +1334,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     if (choice1)
     {
+      // TODO THIS DOES NOT UPDATE coin_bonus VARIABLE PASSED BY REFERENCE, STATE->COINS GETS OVERWRITTEN BY updateCoins() BECAUSE coin_bonus stays 0
       //gain coins equal to trashed card
       state->coins = state->coins + getCost(handCard(choice1, state));
       //trash card
