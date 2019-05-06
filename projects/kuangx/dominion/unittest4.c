@@ -44,7 +44,7 @@ int main(){
 
 	G.discardCount[thisPlayer] = 0;
 
-	// set hand as {smithy, estate, estate, estate, estate}
+	// set hand as {great_hall, estate, estate, estate, estate}
 	G.hand[thisPlayer][0] = great_hall;
 	for(idx = 1; idx < 5; idx++){
 		G.hand[thisPlayer][idx] = 1;
