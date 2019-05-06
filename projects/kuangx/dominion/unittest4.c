@@ -57,26 +57,33 @@ int main(){
 	printf("Testing great hall refactored code:\n\n");
 	cardEffect(great_hall, choice1, choice2, choice3, &G, handpos, &bonus);
 	printf("Test case 1: Great Hall is played, effect is: +1 card, +1 action\n");
-	printf("\tExpected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
-	printf("\tExpected deck count: 9\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
-	printf("\tExpected action count: 2\n\tActual action count: %d\n", G.numActions);
+	// printf("\tExpected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	// printf("\tExpected deck count: 9\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	// printf("\tExpected action count: 2\n\tActual action count: %d\n", G.numActions);
 
-	if(G.handCount[thisPlayer] == 5 && G.deckCount[thisPlayer] == 9 && G.numActions == 2){
-		testCounter++;
-		printf("\tTEST PASSED\n");
+
+	if(G.handCount[thisPlayer] == 5){
+		testCounter++; //1
 	}else{
-		printf("\tTEST FAILED\n");
+		printf("\tERROR>>> Expected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
 	}
-
-	// determine if all tests passed
-	printf("********************\n");
-	if(testCounter == 1){
+	if(G.deckCount[thisPlayer] == 9){
+		testCounter++; //2
+	}else{
+		printf("\tERROR>>> Expected deck count: 7\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	}
+	if(G.numActions == 2){
+		testCounter++; //3
+	}else{
+		printf("\tERROR>>> Expected action count: 2\n\tActual action count: %d\n", G.numActions);
+	}
+// determine if all tests passed
+	if(testCounter == 3){
 		printf("ALL TESTS PASSED\n");
 	}else{
-		printf("TEST(S) FAILED\n");
-	}
 	printf("********************\n");
-	printf(">>>>>UNIT TEST 4 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-
+	printf("TEST(S) FAILED\n");	
+	printf("********************\n");
+	}
 	return 0;
 }

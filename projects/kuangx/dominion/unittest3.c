@@ -59,16 +59,27 @@ int main(){
 	printf("Testing village refactored code:\n\n");
 	cardEffect(village, choice1, choice2, choice3, &G, handpos, &bonus);
 	printf("Test case 1: Village is played, effect is: +1 card, +2 actions\n");
-	printf("\tExpected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
-	printf("\tExpected action count: 3\n\tActual action count: %d\n", G.numActions);
-	if(G.handCount[thisPlayer] == 5 && G.numActions == 3){
-		testCounter++;
-		printf("\tTEST PASSED\n");
-	}else{
-		printf("\tTEST FAILED\n");
-	}
-	printf("********************\n");
-	printf(">>>>>UNIT TEST 3 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	// printf("\tExpected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	// printf("\tExpected action count: 3\n\tActual action count: %d\n", G.numActions);
 
+	if(G.handCount[thisPlayer] == 5){
+		testCounter++; //1
+	}else{
+		printf("\tERROR>>> Expected hand count: 5\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	}
+	if(G.numActions == 3){
+		testCounter++; //2
+	}else{
+		printf("\tERROR>>> Expected action count: 3\n\tActual action count: %d\n", G.numActions);
+	}
+
+	// determine if all tests passed
+	if(testCounter == 2){
+		printf("ALL TESTS PASSED\n");
+	}else{
+	printf("********************\n");
+	printf("TEST(S) FAILED\n");	
+	printf("********************\n");
+	}
 	return 0;
 }

@@ -59,24 +59,33 @@ int main(){
 	printf("Testing smithy refactored code:\n\n");
 	cardEffect(smithy, choice1, choice2, choice3, &G, handpos, &bonus);
 	printf("Test case 1: Smithy is played, effect is: +3 cards\n");
-	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
-	printf("\tExpected deck count: 7\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
-	if(G.handCount[thisPlayer] == 7 && G.deckCount[thisPlayer] == 7){
-		testCounter++;
-		printf("\tTEST PASSED\n");
+	// printf("\tExpected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	// printf("\tExpected deck count: 7\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	// if(G.handCount[thisPlayer] == 7 && G.deckCount[thisPlayer] == 7){
+	// 	testCounter++;
+	// 	printf("\tTEST PASSED\n");
+	// }else{
+	// 	printf("\tTEST FAILED\n");
+	// }
+
+	if(G.handCount[thisPlayer] == 7){
+		testCounter++; //1
 	}else{
-		printf("\tTEST FAILED\n");
+		printf("\tERROR>>> Expected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	}
+	if(G.deckCount[thisPlayer] == 7){
+		testCounter++; //2
+	}else{
+		printf("\tERROR>>> Expected deck count: 7\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
 	}
 
 	// determine if all tests passed
-	printf("********************\n");
-	if(testCounter == 1){
+	if(testCounter == 2){
 		printf("ALL TESTS PASSED\n");
 	}else{
-		printf("TEST(S) FAILED\n");
-	}
 	printf("********************\n");
-	printf(">>>>>UNIT TEST 2 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-
+	printf("TEST(S) FAILED\n");	
+	printf("********************\n");
+	}
 	return 0;
 }

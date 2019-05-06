@@ -84,34 +84,56 @@ int main(){
 	playCard(handpos, choice1, choice2, choice3, &G);
 
 	printf("Test case 1: Testing trashing of card and gaining of coin \n");
-	printf("\tExpected hand count: 3\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	// printf("\tExpected hand count: 3\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
 
-	printf("\tExpected deck count: 5\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	// printf("\tExpected deck count: 5\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
 
-	printf("\tExpected discard count: 0\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
+	// printf("\tExpected discard count: 0\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
 
-	printf("\tExpected playedCards count: 1\n\tActual playedCards count: %d\n", G.playedCardCount);
+	// printf("\tExpected playedCards count: 1\n\tActual playedCards count: %d\n", G.playedCardCount);
 
-	printf("\tExpected coins : 8\n\tActual coins: %d (please see hw3 pdf)\n", G.coins);
+	// printf("\tExpected coins : 8\n\tActual coins: %d (please see hw3 pdf)\n", G.coins);
 
 
-	// print if tests passed or not. If passed, increment testCounter
-	if(G.handCount[thisPlayer] == 3 && G.deckCount[thisPlayer] == 5 && G.discardCount[thisPlayer] == 0 && G.playedCardCount == 1 && G.coins == 8){
-		testCounter++;
-		printf("\tTEST PASSED\n");
+	// // print if tests passed or not. If passed, increment testCounter
+	// if(G.handCount[thisPlayer] == 3 && G.deckCount[thisPlayer] == 5 && G.discardCount[thisPlayer] == 0 && G.playedCardCount == 1 && G.coins == 8){
+	// 	testCounter++;
+	// 	printf("\tTEST PASSED\n");
+	// }else{
+	// 	printf("\tTEST FAILED\n");
+	// }
+	if(G.handCount[thisPlayer] == 3){
+		testCounter++; //1
 	}else{
-		printf("\tTEST FAILED\n");
+		printf("\tERROR>>> Expected hand count: 3\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
 	}
-
-
-	// determine if all tests passed
-	printf("********************\n");
-	if(testCounter == 1){
+	if(G.deckCount[thisPlayer] == 5){
+		testCounter++; //2
+	}else{
+		printf("\tERROR>>> Expected deck count: 5\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	}
+	if(G.discardCount[thisPlayer] == 0){
+		testCounter++; //3
+	}else{
+		printf("\tERROR>>> Expected discard count: 0\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
+	}
+	if(G.playedCardCount == 1){
+		testCounter++; //4
+	}else{
+		printf("\tERROR>>> Expected played card count: 1\n\tActual played card count: %d\n", G.playedCardCount);
+	}
+	if(G.coins == 8){
+		testCounter++; //4
+	}else{
+		printf("\tERROR>>> Expected coins count: 8\n\tActual coins count: %d(please see hw3 pdf)\n", G.coins);
+	}
+// determine if all tests passed
+	if(testCounter == 5){
 		printf("ALL TESTS PASSED\n");
 	}else{
-		printf("TEST(S) FAILED\n");
-	}
 	printf("********************\n");
-	printf(">>>>>CARD TEST 3 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	printf("TEST(S) FAILED\n");	
+	printf("********************\n");
+	}
 	return 0;
 }

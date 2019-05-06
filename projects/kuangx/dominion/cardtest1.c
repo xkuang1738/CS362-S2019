@@ -39,9 +39,10 @@ int main(){
 	}
 
 	// set up discard for testing
-	G.discardCount[thisPlayer] = 2;
+	G.discardCount[thisPlayer] = 3;
 	G.discard[thisPlayer][0] = gold;
 	G.discard[thisPlayer][1] = gold;
+	G.discard[thisPlayer][2] = gold;
 
 	// set hand as {adventurer, estate, estate, estate, estate}
 	G.hand[thisPlayer][0] = adventurer;
@@ -58,10 +59,10 @@ int main(){
 	// Set hand, deck, and discard to known cards/values
 		// Hand will be 5 cards, 4 estate victory cards and 1 adventurer kingdom card in [0] position
 		// deck will be 5 estate cards
-		// discard will be 2 gold treasure cards
+		// discard will be 3 gold treasure cards
 	// Postcontitions:
 		// Hand will have 7 cards: 5 cards to start including adventurer, 5 estates drawn, 2 treasures drawn, discard 5 estates 
-		// Deck will have 0 cards: 5 estates to start with, they all get drawn; Discard is shuffled and 2 gold added to deck; Both gold drawn
+		// Deck will have 1 cards: 5 estates to start with, they all get drawn; Discard is shuffled and 3 gold added to deck; 2 gold drawn
 		// Discard will have 5 cards: 2 gold to start with, both gold get added to deck, 5 non-treasure cards drawn from adventurer discarded
 		
 	// * Play adventurer
@@ -79,31 +80,44 @@ int main(){
 	playCard(handpos, choice1, choice2, choice3, &G);
 
 	printf("Test case 1: No treasures in deck, two treasures in discard. Testing when deck depleted and shuffle of discard is necessary. \n");
-	printf("\tExpected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
+	// printf("\tExpected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
 
-	printf("\tExpected deck count: 0\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	// printf("\tExpected deck count: 0\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
 
-	printf("\tExpected discard count: 5\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
+	// printf("\tExpected discard count: 5\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
 
 	
 
-	// print if tests passed or not. If passed, increment testCounter
-	if(G.handCount[thisPlayer] == 7  && G.deckCount[thisPlayer] == 0 && G.discardCount[thisPlayer] == 5){
-		testCounter++;
-		printf("\tTEST PASSED\n");
+	// // print if tests passed or not. If passed, increment testCounter
+	// if(G.handCount[thisPlayer] == 7  && G.deckCount[thisPlayer] == 0 && G.discardCount[thisPlayer] == 5){
+	// 	testCounter++;
+	// 	printf("\tTEST PASSED\n");
+	// }else{
+	// 	printf("\tTEST FAILED\n");
+	// }
+
+	if(G.handCount[thisPlayer] == 7){
+		testCounter++; //1
 	}else{
-		printf("\tTEST FAILED\n");
+		printf("\tERROR>>> Expected hand count: 7\n\tActual hand count: %d\n", G.handCount[thisPlayer]);
 	}
-
-
-	// determine if all tests passed
-	printf("********************\n");
-	if(testCounter == 1){
+	if(G.deckCount[thisPlayer] == 1){
+		testCounter++; //2
+	}else{
+		printf("\tERROR>>> Expected deck count: 1\n\tActual deck count: %d\n", G.deckCount[thisPlayer]);
+	}
+	if(G.discardCount[thisPlayer] == 5){
+		testCounter++; //3
+	}else{
+		printf("\tERROR>>> Expected discard count: 5\n\tActual discard count: %d\n", G.discardCount[thisPlayer]);
+	}
+// determine if all tests passed
+	if(testCounter == 3){
 		printf("ALL TESTS PASSED\n");
 	}else{
-		printf("TEST(S) FAILED\n");
-	}
 	printf("********************\n");
-	printf(">>>>>CARD TEST 1 END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	printf("TEST(S) FAILED\n");	
+	printf("********************\n");
+	}
 	return 0;
 }
