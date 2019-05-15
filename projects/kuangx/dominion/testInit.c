@@ -1,6 +1,8 @@
 #include "dominion.h"
+// #include "dominion.c"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "rngs.h"
 
 int main (int argc, char** argv) {
