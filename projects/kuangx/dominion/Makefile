@@ -49,9 +49,9 @@ randomtestresults: randomtestcard1 randomtestcard2 randomtestadventurer
 	./randomtestcard1 >> randomtestresults.out
 	./randomtestcard2 >> randomtestresults.out
 	./randomtestadventurer >> randomtestresults.out
-	gcov randomtestcard1.c >> randomtestresults.out
-	gcov randomtestcard2.c >> randomtestresults.out
-	gcov randomtestadventurer.c >> randomtestresults.out
+	gcov -b -u randomtestcard1.c >> randomtestresults.out
+	gcov -b -u randomtestcard2.c >> randomtestresults.out
+	gcov -b -u randomtestadventurer.c >> randomtestresults.out
 	
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtest1 randomtest2 randomtestadventurer 
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestcard1 randomtestcard2 randomtestadventurer 
