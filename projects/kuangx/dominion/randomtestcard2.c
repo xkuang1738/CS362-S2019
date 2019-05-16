@@ -7,7 +7,7 @@
 #include "interface.h"
 #include <stdlib.h>
 
-#define TESTCARD "smithy"
+#define TESTCARD "village"
 
 // https://stackoverflow.com/questions/2509679/how-to-generate-a-random-integer-number-from-within-a-range
 int rand_interval(int min, int max)
@@ -61,9 +61,9 @@ int main()
 			// for each card in hand make it random
 			testG.hand[0][idx] = rand_interval(0, 25);
 		}
-		// have a known card be smithy
+		// have a known card be village
 		handpos = rand_interval(0, testG.handCount[0] - 1);
-		testG.hand[0][handpos] = 13;
+		testG.hand[0][handpos] = village;
 
 		// set up deck for test
 		testG.deckCount[0] = rand_interval(5, 20);
@@ -84,17 +84,24 @@ int main()
 		// make a copy of gameState before card is played so we have something to compare to
 		memcpy(&beforeG, &testG, sizeof(struct gameState));
 
-		cardEffect(smithy, choice1, choice1, choice1, &testG, handpos, &bonus);
+		cardEffect(village, choice1, choice1, choice1, &testG, handpos, &bonus);
 
 		// after card is played, check gamestate before and after, compare with expected results
-		assert(testG.handCount[0] == (beforeG.handCount[0] + 2));
-		assert(testG.deckCount[0] == (beforeG.deckCount[0] - 3));
-		assert(testG.playedCards[0] == smithy);
+		// +1 card to hand, +2 actions
+		// discard village after used
+		// should have same # cards in hand after
+		// should have 1 less card in deck after
+		// should have 2 actions after
+		// should have playedCards[0] be village
+		// should have 1 card played
+		assert(testG.handCount[0] == (beforeG.handCount[0]));
+		assert(testG.deckCount[0] == (beforeG.deckCount[0] - 1));
+		assert(testG.numActions == 3);
+		assert(testG.playedCards[0] == village);
 		assert(testG.playedCardCount == 1);
 	}
-
 	// if reach here then all tests passed
-	printf("\nSMITHY RANDOM TESTS PASSED\n");
+	printf("\nVILLAGE RANDOM TESTS PASSED\n");
 
 	return 0;
 }

@@ -9,7 +9,7 @@
 //#########################################################
 void adventurerEffect(int drawntreasure, struct gameState *state, int currentPlayer, int *temphand, int tempCounter)
 {
-  while (drawntreasure <= 2)
+  while (drawntreasure < 2)
   {
     if (state->deckCount[currentPlayer] < 1)
     { //if the deck is empty we need to shuffle discard and add to deck
@@ -52,7 +52,7 @@ void villageEffect(int currentPlayer, struct gameState *state, int handPos)
   drawCard(currentPlayer, state);
 
   //+2 Actions
-  state->numActions = state->numActions - 2;
+  state->numActions = state->numActions + 2;
 
   //discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
