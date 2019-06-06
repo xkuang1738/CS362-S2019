@@ -59,11 +59,26 @@ boolean istrue = true;
 		assertFalse(valFTP.isValid(validHttp[idx]));
 	}	
 		
-//	UrlValidator with specific options (ALLOW_2_SLASHES, NO_FRAGMENTS)
-		
-
-	
+//	UrlValidator with default schemes and specific options (ALLOW_2_SLASHES, NO_FRAGMENTS)
+//		
+	UrlValidator val2Slash = new UrlValidator(UrlValidator.ALLOW_2_SLASHES);
+//	assertTrue(val2Slash.isValid("http://www.example.com//a//"));
+	for(int idx = 0; idx < invalidAllow2Url.length; idx++) {    //double slashes as the original path and after is allowed
+		assertTrue(val2Slash.isValid(invalidAllow2Url[idx]));
 	}
+	UrlValidator valNoFrag = new UrlValidator(UrlValidator.NO_FRAGMENTS);
+	assertFalse(valNoFrag.isValid("http://www.example.com/foo.html#bar"));		//test various fragments w/different document types
+	assertFalse(valNoFrag.isValid("http://www.example.com/foo.xml#bar"));
+	assertFalse(valNoFrag.isValid("http://www.example.com/document.txt#bar=20,10"));
+	assertTrue(val.isValid("http://www.example.com/foo.html#bar"));				//fragments are allowed by default, these should pass
+	assertTrue(val.isValid("http://www.example.com/foo.xml#bar"));
+	assertTrue(val.isValid("http://www.example.com/document.txt#bar=20,10"));
+	
+	
+	
+	
+	
+	}//END OF testTestIsValid method
 	
 //	collections of urls
 	String[] validUrls = {
@@ -136,7 +151,25 @@ boolean istrue = true;
 			"ftp://yeetube.co?yeet",
 			"ftp://yeetube.co?yeet=ye&yolo=no"	
 	};
-	
+	String[] validAllow2Url = {
+//			valid schemes
+			"http://www.example.com/a//",
+			"https://www.example.com/a//",
+			"ftp://www.example.com/a//",
+//			valid authority
+			"http://this.oops.com/a//",
+			"http://8.6.com/a//",
+			"http://[1001:0db8:0000:0042:0000:8a2e:0370:7334]/a//", //ipv6
+			"http://8.6.com:11/a//",
+			"http://6.6.6.6/a//", //ipv4
+//			valid path
+			"http://yeet.co/a//",
+			"http://yeet.co/86//",
+			"http://yeet.au/this//path",
+//			valid query
+			"http://yeetube.co?yeet/a//",
+			"http://yeetube.co?yeet=ye&yolo=no/a//"	
+	};
 	
 	String[] invalidUrls = {
 //			invalid schemes
@@ -155,6 +188,25 @@ boolean istrue = true;
 			"http://yeet.co//86",
 			"http://yeet.au/this//path"
 	};
-
+	
+	String[] invalidAllow2Url = {
+//			invalid schemes
+			"http://www.example.com//a//",
+			"https://www.example.com//a//",
+			"ftp://www.example.com//a//",
+//			invalid authority
+			"http://this.oops.com//a//",
+			"http://8.6.com//a//",
+			"http://[1001:0db8:0000:0042:0000:8a2e:0370:7334]//a//", //ipv6
+			"http://8.6.com:11//a//",
+			"http://6.6.6.6//a//", //ipv4
+//			invalid path
+			"http://yeet.co//a//",
+			"http://yeet.co//86//",
+			"http://yeet.au//this//path",
+//			invalid query
+			"http://yeetube.co?yeet//a//",
+			"http://yeetube.co?yeet=ye&yolo=no//a//"	
+	};
 }
 
