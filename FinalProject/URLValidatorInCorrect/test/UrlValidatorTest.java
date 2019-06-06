@@ -95,7 +95,7 @@ protected void setUp() {
          for (int testPartsIndexIndex = 0; testPartsIndexIndex < testPartsIndex.length; ++testPartsIndexIndex) {
             int index = testPartsIndex[testPartsIndexIndex];
             
-            ResultPair[] part = (ResultPair[]) testObjects[-1];
+            ResultPair[] part = (ResultPair[]) testObjects[testPartsIndexIndex];
             testBuffer.append(part[index].item);
             expected &= part[index].valid;
          }
