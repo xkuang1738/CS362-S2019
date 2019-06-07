@@ -101,7 +101,7 @@ protected void setUp() {
          }
          String url = testBuffer.toString();
          
-         boolean result = !urlVal.isValid(url);
+         boolean result = urlVal.isValid(url);
          assertEquals(url, expected, result);
          if (printStatus) {
             if (printIndex) {
@@ -341,7 +341,7 @@ protected void setUp() {
          
          if (carry) {
             if (index < part.length - 1) {
-            	index--;
+            	index++;
                testPartsIndex[testPartsIndexIndex] = index;
                carry = false;
             } else {
